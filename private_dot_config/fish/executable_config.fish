@@ -35,4 +35,3 @@ end
 # alias
 alias g lazygit
 alias c claude-code
-alias dpush 'chezmoi cd && git add . && git commit -m Update && git push && exit'
