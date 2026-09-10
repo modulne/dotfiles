@@ -1,0 +1,28 @@
+# 1. Define the server commands
+[language-server.biome]
+command = "biome"
+args = ["lsp-proxy"]
+
+[language-server.tailwindcss-ls]
+command = "tailwindcss-language-server"
+args = ["--stdio"]
+
+# 2. Assign multiple servers to TSX (React)
+[[language]]
+name = "tsx"
+auto-format = true
+# Sequence matters: Biome is first to handle formatting
+language-servers = [ 
+  { name = "biome", only-features = ["format", "diagnostics"] },
+  "tailwindcss-ls", 
+  "typescript-language-server" 
+]
+# Optional: Explicitly define Biome as the external formatter
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.tsx"] }
+
+[[language]]
+name = "typescript"
+auto-format = true
+language-servers = [ "biome", "typescript-language-server" ]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.ts"] }
+
